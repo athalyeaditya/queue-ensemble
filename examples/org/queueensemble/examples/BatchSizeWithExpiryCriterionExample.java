@@ -1,4 +1,4 @@
-package org.queues.examples;
+package org.queueensemble.examples;
 
 import org.queues.ensemble.BatchJob;
 import org.queues.ensemble.SimpleBatchAwareQueue;
