@@ -52,7 +52,7 @@ public class SimpleBatchAwareQueue extends AbstractBatchAwareQueue {
     /**
      * If eviction policy is not null the frequency in milliseconds with which to run eviction thread.
      */
-    private int evictionFrequency;
+    private long evictionFrequency;
 
     /**
      * Eviction timer.
@@ -101,7 +101,7 @@ public class SimpleBatchAwareQueue extends AbstractBatchAwareQueue {
                                  int highUnits,
                                  BufferCriterion bufferCriterion,
                                  EvictionPolicy evictionPolicy,
-                                 int evictionFrequency) {
+                                 long evictionFrequency) {
         super(name, highUnits);
         this.bufferCriterion = bufferCriterion;
         this.evictionPolicy = evictionPolicy;
@@ -231,7 +231,7 @@ public class SimpleBatchAwareQueue extends AbstractBatchAwareQueue {
         return size() >= highUnits;
     }
 
-    public int getEvictionFrequency() {
+    public long getEvictionFrequency() {
         return evictionFrequency;
     }
 
