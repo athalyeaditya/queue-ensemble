@@ -30,13 +30,14 @@ entries in the queue, no **take()** is allowed. In the above example Consumer-4 
 
 Along with batch size expiry time is set to 5 milliseconds. Entry-1 was inserted at T1, Entry-2 at T2 and so on.
 When Entry-3 was inserted at T3, T3-T1 >= 5 millisconds and hence even though batch of 5 was not completed,
-**take()** was allowed for COnsumer-3.
+**take()** was allowed for Consumer-3.
 
 ## Eviction
 
 The queue supports an optional eviction behaviour. If queue becomes full, it can evict any entry
-to create space, if no takers are available. This is done in a separate thread. An eviction
-frequency can be set for the same
+to create space, if no takers are available. This can be done in a separate thread. by setting
+an eviction policy and eviction frequency. 
+Eviction is done by the putter thread is eviction policy is not set.
 See API section for more info
 
 # API
