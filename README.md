@@ -17,6 +17,21 @@ Following 2 types of buffer criteria are supported.
 * Simple batch size only buffering - Take will be allowed when batch size is met in the queue
 * Batch size with expiry buffering - Either batch size or expiry of the oldest entry whichever is earlier. Takes may be less than or equal to batch size
 
+## Concept
+### Simple Batch Based Queueing
+![Simple Batch Size based queueing](https://cloud.githubusercontent.com/assets/7447855/13902851/3b880254-ee83-11e5-8289-40448169c349.png)
+
+As shown in the above diagram, there are multiple writer threads (Writer-1, Writer-2) etc., whereas
+Consumer-1, Consumer-2 are reading from the queue. Batch size is set to 5, so unless there are at least 5
+entries in the queue, no **take()** is allowed. In the above example Consumer-4 gets all 5 entries.
+
+### Batch With expiry
+![Batch With expiry based queueing](https://cloud.githubusercontent.com/assets/7447855/13902881/2bb4cc8e-ee85-11e5-8905-9ebdacbf81f4.png)
+
+Along with batch size expiry time is set to 5 milliseconds. Entry-1 was inserted at T1, Entry-2 at T2 and so on.
+When Entry-3 was inserted at T3, T3-T1 >= 5 millisconds and hence even though batch of 5 was not completed,
+**take()** was allowed for COnsumer-3.
+
 ## Eviction
 
 The queue supports an optional eviction behaviour. If queue becomes full, it can evict any entry
