@@ -150,7 +150,7 @@ public class SimpleBatchAwareQueue extends AbstractBatchAwareQueue {
         lock.lock();
 
         try {
-            isCriterionMet = add(batchJob);
+            isCriterionMet = add(batchJob, timeout, unit);
             //Signal the consumer to take
             batchCondition.signal();
         } catch (Exception e1) {
@@ -191,14 +191,14 @@ public class SimpleBatchAwareQueue extends AbstractBatchAwareQueue {
      *
      */
     @GuardedBy("batchLock")
-    private boolean add(BatchJob batchJob) throws QueueException {
+    private boolean add(BatchJob batchJob, long timeout, TimeUnit unit) throws QueueException {
         final ReentrantLock lock = this.batchLock;
         lock.lock();
 
         try {
             while (evictionPolicy != null && highUnitsMet()) {
                 //Wait for timer to evict an entry and create space
-                evictCondition.await();
+                evictCondition.await(timeout, unit);
             }
             if (highUnitsMet()) {
                 //Same thread to evict
